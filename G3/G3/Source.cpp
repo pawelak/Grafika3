@@ -26,8 +26,9 @@ point3 tab[liczbaPodzialow+1][liczbaPodzialow+1];
 int u = 0, v = 1;
 char model = 1;
 static GLfloat theta[] = { 0.0, 0.0, 0.0 };
-float speed = 0.05;
-point3 color = { 1.0, 1.0, 1.0 };
+point3 speed = { 0.01, 0.01, 0.01 };
+point3 color = { 0.0, 0.0, 0.0 };
+point3 color2 = { 1.0, 1.0, 1.0 };
 
 
 /*************************************************************************************/
@@ -117,16 +118,14 @@ void paint()
 {
 
 	glPointSize(1); // podajemy wielkoœæ punktu
-	glColor3f(1, 0, 0);
-
 	switch (model)
 	{
 		case '1':
 	{
-
+		glColor3fv(color2);
 		for (int i = 0; i < liczbaPodzialow; i++)
 		{
-			glColor3f(1, 0, 0);
+			
 			for (int j = 0; j < liczbaPodzialow; j++)
 			{
 				glBegin(GL_POINTS);
@@ -279,66 +278,7 @@ void paint()
 		break;
 	}
 
-	/*
-
-			if (model == 2)
-			{
-				glBegin(GL_LINES); //pion
-				glVertex3fv(tab[i][j]);
-				glVertex3fv(tab[i][j+1]);
-				glEnd();
-
-				glBegin(GL_LINES); //poziom
-				glVertex3fv(tab[i][j]);
-				glVertex3fv(tab[i][j]);
-				glEnd();
-
-				glBegin(GL_LINES);
-				if (j + 1 < liczbaPodzialow && i + 1 < liczbaPodzialow)
-				{
-					glVertex3fv(tab[i + 1][j]);
-					glVertex3fv(tab[i][j + 1]);
-				}
-
-				glColor3f(0, 1, 0);
-				glVertex3fv(tab[liczbaPodzialow][4]);
-				glVertex3fv(tab[liczbaPodzialow-1][4]);
-				glColor3f(1, 0, 0);
-				glEnd();*/
-				/*}
-				if (model == 3)
-				{
-					for (int i = 0; i < liczbaPodzialow; i++)
-					{
-						for (int j = 0; j < liczbaPodzialow; j++)
-						{
-							if (i + 1 < liczbaPodzialow && j+1 <liczbaPodzialow)
-							{
-								glBegin(GL_TRIANGLES);
-								glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
-								glVertex3fv(tab[i][j]);
-								glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
-								glVertex3fv(tab[i+1][j]);
-								glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
-								glVertex3fv(tab[i + 1][j + 1]);
-								glEnd();
-
-								glBegin(GL_TRIANGLES);*/
-
-								/*glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
-								glVertex3fv(tab[i][j]);
-								glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
-								glVertex3fv(tab[i][j+1]);
-								glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
-								glVertex3fv(tab[i + 1][j + 1]);
-
-								glColor3f(0.01,0.8,0.1);
-								glVertex3fv(tab[i][j]);
-								glVertex3fv(tab[i][j + 1]);
-								glVertex3fv(tab[i + 1][j + 1]);
-
-								glEnd();
-								*/
+	
 
 }
 
@@ -451,6 +391,38 @@ void keys(unsigned char key, int x, int y)
 		color[2] += 0.05;
 		if (color[2] > 1)color[2] = 0;
 	}
+	if (key == 'x')
+	{
+		speed[0] += 0.02;
+		if (speed[0] > 1)speed[0] = 0;
+	}
+	if (key == 'y')
+	{
+		speed[1] += 0.02;
+		if (speed[1] > 1)speed[1] = 0;
+	}
+	if (key == 'z')
+	{
+		speed[2] += 0.02;
+		if (speed[2] > 1)speed[2] = 0;
+	}
+	if (key == 'q')
+	{
+		speed[0] = 0;
+		speed[1] = 0;
+		speed[2] = 0;
+		color[0] = 0;
+		color[1] = 0;
+		color[2] = 0;
+
+	}
+	if (key == 'm')
+	{
+		int r = rand() % +3;
+		color[r] = 1;
+	}
+
+
 
 	RenderScene(); // przerysowanie obrazu sceny
 }
@@ -458,13 +430,13 @@ void keys(unsigned char key, int x, int y)
 void spinEgg()
 {
 
-	theta[0] -= speed;
+	theta[0] -= speed[0];
 	if (theta[0] > 360.0) theta[0] -= 360.0;
 
-	theta[1] -= speed;
+	theta[1] -= speed[1];
 	if (theta[1] > 360.0) theta[1] -= 360.0;
 
-	theta[2] -= speed;
+	theta[2] -= speed[2];
 	if (theta[2] > 360.0) theta[2] -= 360.0;
 
 	glutPostRedisplay(); //odœwie¿enie zawartoœci aktualnego okna
