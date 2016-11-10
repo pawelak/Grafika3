@@ -18,7 +18,7 @@
 using namespace std;
 
 
-const int liczbaPodzialow = 41;
+const int liczbaPodzialow = 20;
 typedef float point3[3];
 point3 tab[liczbaPodzialow+1][liczbaPodzialow+1];	
 
@@ -160,8 +160,8 @@ void paint()
 			}
 			glBegin(GL_LINES); //tu uzupe³niem brakuj¹ce elementy których nie dosrysowa³o przy tworzeniu jajka
 
-			glVertex3fv(tab[i][liczbaPodzialow-1]); //poziom uzupe³nienie
-			glVertex3fv(tab[liczbaPodzialow-i][0]);
+			glVertex3fv(tab[i][liczbaPodzialow - 1]); //poziom uzupe³nienie
+			glVertex3fv(tab[liczbaPodzialow - i][0]);
 
 			glVertex3fv(tab[i][liczbaPodzialow-1]); //pion uzupe³nienie 
 			glVertex3fv(tab[i+1][liczbaPodzialow-1]);
@@ -169,7 +169,9 @@ void paint()
 			glVertex3fv(tab[i][liczbaPodzialow - 1]); //poziom uzupe³nienie
 			glVertex3fv(tab[liczbaPodzialow - i-1][0]);
 
+
 			glEnd();
+			
 		}
 
 
@@ -197,6 +199,18 @@ void paint()
 				glVertex3fv(tab[i][j + 1]);
 				glEnd();
 			}
+			glBegin(GL_TRIANGLES);
+			if (i>i - 1 && i >= 0)
+			{
+				glVertex3fv(tab[i][liczbaPodzialow - 1]);
+				glVertex3fv(tab[liczbaPodzialow - i][0]);
+				glVertex3fv(tab[i + 1][liczbaPodzialow - 1]);
+
+				glVertex3fv(tab[i][liczbaPodzialow - 1]);
+				glVertex3fv(tab[liczbaPodzialow - i][0]);
+				glVertex3fv(tab[liczbaPodzialow - i + 1][0]);
+			}
+			glEnd();
 		}
 		break;
 	}
@@ -207,6 +221,8 @@ void paint()
 		{
 			for (int j = 0; j < liczbaPodzialow; j++)
 			{
+				//glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
+				glColor3f(i/liczbaPodzialow, i/liczbaPodzialow, i/liczbaPodzialow);
 				glBegin(GL_POLYGON);
 				glVertex3fv(tab[i][j]);
 				glVertex3fv(tab[i][j+1]);
@@ -214,6 +230,22 @@ void paint()
 				glVertex3fv(tab[i+1][j]);
 				glEnd();
 			}
+
+			glBegin(GL_POLYGON);
+			
+			glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
+			glVertex3fv(tab[i][liczbaPodzialow - 1]);
+			//glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
+			glVertex3fv(tab[liczbaPodzialow - i][0]);
+			
+			glVertex3fv(tab[liczbaPodzialow -i -1][0]);
+
+			glVertex3fv(tab[i + 1][liczbaPodzialow - 1]);
+
+			
+
+			glEnd();
+			
 		}
 		break;
 	}
@@ -245,6 +277,33 @@ void paint()
 					glVertex3fv(tab[i][j + 1]);
 					glEnd();
 				}
+				glBegin(GL_TRIANGLES);
+				//glColor3f(1.0, 0, 0);
+				if (i>i-1 && i>=0)
+				{
+					glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
+					glVertex3fv(tab[i][liczbaPodzialow - 1]);
+					glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
+					glVertex3fv(tab[liczbaPodzialow - i][0]);
+					glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
+					glVertex3fv(tab[i + 1][liczbaPodzialow - 1]);
+
+					glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
+					glVertex3fv(tab[i][liczbaPodzialow - 1]);
+					glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
+					glVertex3fv(tab[liczbaPodzialow - i][0]);
+					glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
+					glVertex3fv(tab[liczbaPodzialow-i+1][0]);
+				}
+				
+			
+				glEnd();
+
+				//glBegin(GL_LINE);
+				//glColor3f(0, 0, 1.0);
+				//glVertex3fv(tab[i][liczbaPodzialow - 1]); //poziom
+				//glVertex3fv(tab[liczbaPodzialow - i][0]);
+				//glEnd();
 			}
 			break;
 		}
