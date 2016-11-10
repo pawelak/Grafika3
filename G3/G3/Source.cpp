@@ -18,7 +18,7 @@
 using namespace std;
 
 
-const int liczbaPodzialow = 20;
+const int liczbaPodzialow = 100;
 typedef float point3[3];
 point3 tab[liczbaPodzialow+1][liczbaPodzialow+1];	
 
@@ -217,12 +217,19 @@ void paint()
 	case '4':
 	{
 		glColor3fv(color);
-		for (int i = 0; i < liczbaPodzialow; i++)
+		int i, j;
+		float help1, help2;
+		for (i = 0; i < liczbaPodzialow; i++)
 		{
-			for (int j = 0; j < liczbaPodzialow; j++)
+			for (j = 0; j < liczbaPodzialow; j++)
 			{
+				
+				if (i > liczbaPodzialow / 2)help1 = (float)(liczbaPodzialow - i) / liczbaPodzialow;
+				else help1 = (float)i / liczbaPodzialow;
+				if (j > liczbaPodzialow / 2)help2 = (float)(liczbaPodzialow - j) / liczbaPodzialow;
+				else help2 = (float)j / liczbaPodzialow;
 				//glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
-				glColor3f(i/liczbaPodzialow, i/liczbaPodzialow, i/liczbaPodzialow);
+				glColor3f(0,help2,help1);
 				glBegin(GL_POLYGON);
 				glVertex3fv(tab[i][j]);
 				glVertex3fv(tab[i][j+1]);
@@ -233,15 +240,20 @@ void paint()
 
 			glBegin(GL_POLYGON);
 			
-			glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
+			glColor3f(0, help2, help1);
+			//glColor3f(0, 0, 0);
 			glVertex3fv(tab[i][liczbaPodzialow - 1]);
-			//glColor3f(((rand() % 100)*0.01), ((rand() % 100)*0.01), ((rand() % 100)*0.01));
+			//glColor3f(0, 0, 1);
+			//glColor3f((float)i / liczbaPodzialow, (float)j / liczbaPodzialow, 0);
+			glVertex3fv(tab[i + 1][liczbaPodzialow - 1]);
+			//glColor3f(0,1, 0);
+			//glColor3f((float)i / liczbaPodzialow, (float)liczbaPodzialow-i / liczbaPodzialow, 0);
+			glVertex3fv(tab[liczbaPodzialow -i -1][0]);
+			//glColor3f((float)liczbaPodzialow / liczbaPodzialow, (float)j/i / liczbaPodzialow, 0);
+			//glColor3f(1, 0, 0);
 			glVertex3fv(tab[liczbaPodzialow - i][0]);
 			
-			glVertex3fv(tab[liczbaPodzialow -i -1][0]);
-
-			glVertex3fv(tab[i + 1][liczbaPodzialow - 1]);
-
+			
 			
 
 			glEnd();
